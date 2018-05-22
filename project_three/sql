@@ -1,0 +1,27 @@
+用户注册
+INSERT INTO user 
+(
+    user_id,
+    password,
+    nickname,
+    fullname,
+    sex,
+    email,
+    address,
+)
+VALUES
+(
+    pengowang
+    3764819
+    roc
+    wangpeng
+    male,
+    wangpeng29029@163.com
+    HIT_A02_6103
+);
+
+
+修改个人信息
+UPDATE user SET nickname='pengo' where user_id='pengowang'
+
+

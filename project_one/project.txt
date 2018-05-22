@@ -1,0 +1,10 @@
+SQL Project	P1	shenzhen	0
+Market Research	P2	shanghai	1
+MS Game	P3	chengdu	2
+Acquisition	P4	shenzhen	3
+UI Design	P5	beijing	4
+TM Game	P6	chengdu	0
+Campus Recruitment	P7	shenzhen	2
+Art Design	P8	haerbin	4
+Social Recruitment	P9	nanjing	2
+App Development	P10	guangzhou	0

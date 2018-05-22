@@ -1,0 +1,109 @@
+user
+(
+    user_id VARCHAR(20) NOT NULL,
+
+    password VARCHAR(20) NOT NULL,
+    nickname VARCHAR(20) NOT NULL,
+    fullname VARCHAR(20),
+    sex ENUM('male', 'female')
+    email VARCHAR(30),
+    address VARCHAR(50),
+
+    PRIMARY KEY(user_id)
+)
+
+edu_experience
+(
+    user_id VARCHAR(20) NOT NULL,
+
+    level ENUM('medium', 'high'),
+    start_date DATE ,
+    end_date DATE ,
+    school VARCHAR(20) ,
+    degree ENUM('bachelor', 'master', 'doctor')
+)
+
+work_experience
+(
+    user_id VARCHAR(20) NOT NULL,
+
+    position VARCHAR(20)
+    start_date DATE ,
+    end_date DATE ,
+    company VARCHAR(20) 
+)
+
+
+user_group
+(
+    group_id INT AUTO_INCREMENT
+    user_id VARCHAR(20) NOT NULL,
+    friend_id VARCHAR(20) NOT NULL,
+
+    PRIMARY_KEY(group_id, user_id)
+)
+
+groups
+(
+    group_id INT NOT NULL,
+    group_name VARCHAR(20) NOT NULL
+
+    PRIMARY_KEY(group_id)
+)
+
+/* groups */
+/* ( */
+/*     user_id VARCHAR(20) NOT NULL */
+/*     // modify group_name to group_id and add a new table storing group information(group_id, group_name) */
+/*     group_id INT AUTO_INCREMENT, */
+/*     /1* group_name VARCHAR(20) NOT NULL *1/ */
+/*     friend_id VARCHAR(20) NOT NULL, */
+
+/*     PRIMARY KEY(user_id, group_name) */
+/* ) */
+
+log
+(
+    log_id INT UNSIGNED AUTO INCREMENT
+    user_id VARCHAR(20) NOT NULL
+
+    title VARCHAR(50) NOT NULL
+    publish_date DATE NOT NULL,
+    modify_date DATE NOT NULL,
+    context VARCHAR(1000)
+
+    PRIMARY KEY(log_id)
+)
+
+chat_message
+(
+    sender_id VARCHAR(20) NOT NULL,
+    recver_id VARCHAR(20) NOT NULL
+
+    publish_date DATE NOT NULL,
+    context VARCHAR(1000)
+)
+
+log_message
+(
+    sender_id VARCHAR(20) NOT NULL,
+    log_id INT UNSIGNED NOT NULL,
+
+    publish_date DATE NOT NULL,
+    context VARCHAR(1000)
+)
+
+share_log
+(
+    sharer_id VARCHAR(20) NOT NULL,
+    log_id INT UNSIGNED NOT NULL
+
+    share_date DATE NOT NULL,
+    context VARCHAR(1000)
+)
+
+
+
+
+
+
