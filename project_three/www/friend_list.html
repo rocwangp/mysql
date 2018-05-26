@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>friends</title>
+    </head>
+    <body>
+{% for item in list %}
+    <ul>
+        <li>{{item.user_id}}</li>
+        <li>{{item.password}}</li>
+        <li>{{item.nickname}}</li>
+        <li>{{item.fullname}}</li>
+        <li>{{item.sex}}</li>
+        <li>{{item.email}}</li>
+    </ul>
+{% endfor %}
+    </body>
+</html>

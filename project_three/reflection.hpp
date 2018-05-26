@@ -13,6 +13,7 @@ namespace reflection
 #define CON_STR_4(element, ...) MAKE_STRING_VIEW(element) SEPERATOR CON_STR_3(__VA_ARGS__)
 #define CON_STR_5(element, ...) MAKE_STRING_VIEW(element) SEPERATOR CON_STR_4(__VA_ARGS__)
 #define CON_STR_6(element, ...) MAKE_STRING_VIEW(element) SEPERATOR CON_STR_5(__VA_ARGS__)
+#define CON_STR_7(element, ...) MAKE_STRING_VIEW(element) SEPERATOR CON_STR_6(__VA_ARGS__)
 
 #define MAKE_ARG_LIST_1(op, arg, ...) op(arg)
 #define MAKE_ARG_LIST_2(op, arg, ...) op(arg) SEPERATOR MAKE_ARG_LIST_1(op, __VA_ARGS__)
@@ -20,6 +21,7 @@ namespace reflection
 #define MAKE_ARG_LIST_4(op, arg, ...) op(arg) SEPERATOR MAKE_ARG_LIST_3(op, __VA_ARGS__)
 #define MAKE_ARG_LIST_5(op, arg, ...) op(arg) SEPERATOR MAKE_ARG_LIST_4(op, __VA_ARGS__)
 #define MAKE_ARG_LIST_6(op, arg, ...) op(arg) SEPERATOR MAKE_ARG_LIST_5(op, __VA_ARGS__)
+#define MAKE_ARG_LIST_7(op, arg, ...) op(arg) SEPERATOR MAKE_ARG_LIST_6(op, __VA_ARGS__)
 
 #define MARCO_CONCAT(A, B) A##_##B
 
@@ -55,7 +57,7 @@ namespace reflection
     MAKE_META_DATA(STRUCT_NAME, GET_ARG_COUNT(__VA_ARGS__), __VA_ARGS__)
 
     template <typename T>
-    using reflection_t = decltype(members_reflection(std::declval<T>()));
+    using reflection_t = decltype(members_reflection(std::declval<std::remove_reference_t<T>>()));
 
     template <typename T, typename = void>
     struct is_reflection : std::false_type {};

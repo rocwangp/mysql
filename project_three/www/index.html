@@ -1,0 +1,55 @@
+<html>
+    <link rel="stylesheet" href="/www/css/bootstrap.min.css">
+    <script src="/www/js/jquery.min.js"></script>
+    <script src="/www/js/bootstrap.min.js"></script>
+
+    <head>
+        <title>users</title>
+    </head>
+    <body>
+        <form action="query_all_users" method="get">
+            <button type="submit"> query all users </button>
+        </form>
+
+        <form action="query_user_with_user_id" method="get">
+            user_id: <input type="text" name="user_id"><br>
+            <button type="submit"> query user with user_id </button>
+        </form>
+
+        <form action="query_all_friends" method="get">
+            user_id: <input type="text" name="user_id"><br>
+            <button type="submit"> query all friends </button>
+        </form>
+
+        <form action="query_friends_with_group_name" method="get">
+            user_id: <input type="text" name="user_id"><br>
+            group_name: <input type="text" name="group_name"><br>
+            <button type="submit"> query friends with group_name  </button>
+        </form>
+
+        <form action="query_all_groups_with_user_id" method="get">
+            user_id: <input type="text" name="user_id"><br>
+            <button type="submit"> query all groups with user_id </button>
+        </form>
+
+        <form action="query_common_friends" method="get">
+            user_id1: <input type="text" name="user_id1"><br>
+            user_id2: <input type="text" name="user_id2"><br>
+            <button type="submit"> query common friends </button>
+        </form>
+
+        <form action="add_friend" method="post">
+            user_id: <input type="text" name="user_id"><br>
+            friend_id: <input type="text" name="friend_id"><br>
+            group_name: <input type="text" name="group_name"><br>
+            <button type="submit"> add friend </button>
+        </form>
+
+        <form action="create_group" method="post">
+            user_id: <input type="text" name="user_id"><br>
+            group_name: <input type="text" name="group_name"><br>
+            <button type="submit"> create group </button>
+        </form>
+
+    </body>
+</html>
