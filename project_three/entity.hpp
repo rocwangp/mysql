@@ -80,12 +80,12 @@ namespace mysql
 
     struct chat_message
     {
+        std::int32_t message_id;
         std::array<char, 50> sender_id;
         std::array<char, 50> recver_id;
         std::array<char, 1000> context;
-        std::chrono::system_clock::time_point publish_date;
     };
-    REFLECTION(chat_message, sender_id, recver_id, context, publish_date)
+    REFLECTION(chat_message, message_id, sender_id, recver_id, context)
 
     struct share_log
     {
@@ -96,4 +96,14 @@ namespace mysql
     };
     REFLECTION(share_log, sharer_id, log_id, context, share_date)
 
+    struct friend_request
+    {
+        std::int32_t request_id;
+        std::array<char, 50> sender_id;
+        std::array<char, 50> recver_id;
+        std::int32_t pending;
+        std::array<char, 50> sender_group;
+        std::array<char, 50> recver_group;
+    };
+    REFLECTION(friend_request, request_id, sender_id, recver_id, pending, sender_group, recver_group)
 }

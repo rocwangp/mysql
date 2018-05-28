@@ -175,9 +175,9 @@ namespace mysql
 
             template <typename T>
             std::enable_if_t<reflection::is_reflection<T>::value, bool>
-            insert(T&& t, std::unordered_set<std::string_view>&& null_field_set = std::unordered_set<std::string_view>{}) {
+            insert(T&& t, null_field_set&& null_field = null_field_set{}) {
                 std::unique_ptr<sql::Statement> stmt(conn_->createStatement());
-                stmt->executeUpdate(make_insert_sql(std::forward<T>(t), std::move(null_field_set)));
+                stmt->executeUpdate(make_insert_sql(std::forward<T>(t), std::move(null_field)));
             }
 
             template <typename T>
@@ -190,12 +190,13 @@ namespace mysql
 
             template <typename T, typename... Args>
             bool remove(Args&&... args) {
-                std::string sql = make_remove_sql<T>(std::forward<Args>(args)..., primary_keys_);
+                std::string sql = make_remove_sql<T>(std::forward<Args>(args)...);
                 std::unique_ptr<sql::Statement> stmt(conn_->createStatement());
                 return stmt->execute(sql);
             }
 
             int execute(const std::string& sql) {
+                log_info(sql);
                 std::unique_ptr<sql::Statement> stmt(conn_->createStatement());
                 return stmt->execute(sql);
             }

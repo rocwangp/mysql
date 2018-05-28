@@ -124,10 +124,8 @@ namespace mysql
                 utils::string_append(sql, ", ");
             }
             utils::string_append(sql, field_names[i]);
-            if(i + 1 == field_names.size()) {
-                utils::string_append(sql, ")");
-            }
         }
+        utils::string_append(sql, ")");
 
         first = true;
         utils::string_append(sql, " VALUES (");
@@ -142,7 +140,9 @@ namespace mysql
                 first = false;
             }
             using field_type = std::remove_reference_t<decltype(field)>;
+            utils::string_append(sql, "\"");
             if constexpr (utils::is_cpp_array_v<field_type>) {
+                log_info(field.data());
                 utils::string_append(sql, field.data());
             }
             else if constexpr (utils::is_system_time_point_v<field_type>) {
@@ -151,6 +151,7 @@ namespace mysql
             else {
                 utils::string_append(sql, field);
             }
+            utils::string_append(sql, "\"");
         });
         utils::string_append(sql, ")");
         log_info(sql);
@@ -164,91 +165,72 @@ namespace mysql
         constexpr auto table_name = reflection::reflection_t<T>::name();
         auto& primary_key_set = primary_key[table_name];
 
-        std::string sql("UPDATE TABLE " + table_name + " SET ");
-        std::string condition;
-        bool sql_first{ true };
-        bool condition_first{ true };
+        std::string sql("UPDATE ");
+        utils::string_append(sql, table_name);
+        bool first{ true };
         reflection::for_each(t, [&](auto& field, std::size_t idx) {
             using field_type = std::remove_reference_t<decltype(field)>;
-            constexpr auto field_name = field_names[idx];
-            bool is_primary_key = primary_key_set.count(field_name);
-            if(!is_primary_key && !update_field.empty() && update_field.count(field_name) == 0) {
+            auto field_name = field_names[idx];
+            if(primary_key_set.count(field_name)) {
                 return;
             }
-            if(is_primary_key) {
-                if(!condition_first) {
-                    utils::string_append(condition, " AND ");
-                }
-                else {
-                    condition_first = false;
-                }
+            if(!first) {
+                utils::string_append(sql, ", ");
             }
             else {
-                if(!sql_first) {
-                    utils::string_append(sql, ", ");
-                }
-                else {
-                    sql_first = false;
-                }
+                utils::string_append(sql, " SET ");
+                first = false;
             }
-
-            std::string s;
-            utils::string_append(s, field_name, "=\"");
+            utils::string_append(sql, field_name, "=\"");
             if constexpr (utils::is_cpp_array_v<field_type>) {
-                utils::string_append(s, field.data());
-            }
-            else if constexpr (utils::is_system_time_point_v<field_type>) {
-                utils::string_append(s, utils::time_point_to_string(field));
+                utils::string_append(sql, field.data(), "\"");
             }
             else {
-                utils::string_append(s, field);
-            }
-            utils::string_append(s, "\"");
-
-            if(is_primary_key) {
-                utils::string_append(condition, s);
-            }
-            else {
-                utils::string_append(sql, s);
+                utils::string_append(sql, field, "\"");
             }
         });
-        utils::string_append(sql, " WHERE ", condition);
+        first = true;
+        reflection::for_each(t, [&](auto& field, std::size_t idx) {
+            using field_type = std::remove_reference_t<decltype(field)>;
+            auto field_name = field_names[idx];
+            if(!primary_key_set.count(field_name)) {
+                return;
+            }
+            if(!first) {
+                utils::string_append(sql, " AND ");
+            }
+            else {
+                utils::string_append(sql, " WHERE ");
+                first = false;
+            }
+            utils::string_append(sql, field_name, "=\"");
+            if constexpr (utils::is_cpp_array_v<field_type>) {
+                utils::string_append(sql, field.data(), "\"");
+            }
+            else {
+                utils::string_append(sql, field, "\"");
+            }
+        });
         log_info(sql);
         return sql;
     }
 
-    template <typename T>
-    std::string make_remove_sql(T&& t, primary_key_map& primary_key) {
+    template <typename T, typename... Args>
+    std::string make_remove_sql(Args&&... args) {
         static_assert(reflection::is_reflection<T>::value, "the table needs to be a reflected type");
         constexpr auto field_names = reflection::reflection_t<T>::arr();
         constexpr auto table_name = reflection::reflection_t<T>::name();
-        std::string sql("DELETE FROM " + table_name);
-        auto& primary_key_set = primary_key[table_name];
-        bool first{ true };
-        reflection::for_each(t, [&](auto&& field, std::size_t idx) {
-            if(!primary_key_set.count(field_names[idx])) {
-                return;
-            }
-            using field_type = std::remove_reference_t<decltype(field)>;
-            if(first) {
+        std::string sql("DELETE FROM ");
+        utils::string_append(sql, table_name);
+        utils::for_each(std::make_tuple(args...), [&](auto& field, std::size_t idx) {
+            if(idx == 0) {
                 utils::string_append(sql, " WHERE ");
-                first = false;
             }
             else {
                 utils::string_append(sql, " AND ");
             }
-            utils::string_append(sql, field_names[idx], "=\"");
-            if constexpr (utils::is_cpp_array_v<field_type>) {
-                utils::string_append(sql, field.data());
-            }
-            else if constexpr (utils::is_system_time_point_v<field_type>) {
-                utils::string_append(sql, utils::time_point_to_string(field));
-            }
-            else {
-                utils::string_append(sql, field);
-            }
-            utils::string_append(sql, "\"");
-        });
+            utils::string_append(sql, field);
+        }, std::make_index_sequence<sizeof...(Args)>{});
         log_info(sql);
         return sql;
     }

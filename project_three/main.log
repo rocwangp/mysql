@@ -1,0 +1,641 @@
+Sat May 26 19:04:08 2018 [140225448340288] [sql.hpp:make_create_db_sql:309] [info ] CREATE DATABASE IF NOT EXISTS social 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_server.hpp:operator():35] [info ] <2.0.39.16:10000>:<2.0.226.94:57950> 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_server.hpp:operator():35] [info ] <2.0.39.16:10000>:<2.0.226.96:57952> 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_server.hpp:operator():35] [info ] <2.0.39.16:10000>:<2.0.226.98:57954> 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_server.hpp:operator():35] [info ] <2.0.39.16:10000>:<2.0.226.100:57956> 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_server.hpp:operator():35] [info ] <2.0.39.16:10000>:<2.0.226.102:57958> 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_server.hpp:operator():35] [info ] <2.0.39.16:10000>:<2.0.226.104:57960> 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/user_login.html HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/user_login.html 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 3148
+
+ 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/css/font-awesome.min.css HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: text/css,*/*;q=0.1
+Referer: http://127.0.0.1:10000/www/user_login.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/css/font-awesome.min.css 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 27466
+
+ 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/css/bootstrap.min.css HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: text/css,*/*;q=0.1
+Referer: http://127.0.0.1:10000/www/user_login.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/css/bootstrap.min.css 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 127343
+
+ 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/css/demo.css HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: text/css,*/*;q=0.1
+Referer: http://127.0.0.1:10000/www/user_login.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:10 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/css/demo.css 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 4922
+
+ 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/css/templatemo-style.css HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: text/css,*/*;q=0.1
+Referer: http://127.0.0.1:10000/www/user_login.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/css/templatemo-style.css 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 4652
+
+ 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/js/modernizr.custom.86080.js HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: */*
+Referer: http://127.0.0.1:10000/www/user_login.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/js/modernizr.custom.86080.js 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 6503
+
+ 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/js/particles.js HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: */*
+Referer: http://127.0.0.1:10000/www/user_login.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/js/particles.js 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 43009
+
+ 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/js/app.js HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: */*
+Referer: http://127.0.0.1:10000/www/user_login.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/js/app.js 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 2954
+
+ 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/img/letter_bg_03.jpg HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: image/webp,image/apng,image/*,*/*;q=0.8
+Referer: http://127.0.0.1:10000/www/css/templatemo-style.css
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/img/letter_bg_03.jpg 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 165729
+
+ 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/img/letter_bg_02.jpg HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: image/webp,image/apng,image/*,*/*;q=0.8
+Referer: http://127.0.0.1:10000/www/css/templatemo-style.css
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/img/letter_bg_02.jpg 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 175547
+
+ 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/img/letter_bg_01.jpg HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: image/webp,image/apng,image/*,*/*;q=0.8
+Referer: http://127.0.0.1:10000/www/css/templatemo-style.css
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/img/letter_bg_01.jpg 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 154341
+
+ 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/fonts/fontawesome-webfont.woff2?v=4.5.0 HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+Origin: http://127.0.0.1:10000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: */*
+Referer: http://127.0.0.1:10000/www/css/font-awesome.min.css
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/fonts/fontawesome-webfont.woff2 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 66624
+
+ 
+Sat May 26 19:04:11 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] POST /www/user_login.html HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+Content-Length: 30
+Cache-Control: max-age=0
+Origin: http://127.0.0.1:10000
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Referer: http://127.0.0.1:10000/www/user_login.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+user_id=user1&password=3764819 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] POST 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:16 2018 [140225448340288] [main.cc:operator():37] [info ] user_login.html 
+Sat May 26 19:04:16 2018 [140225448340288] [handler.hpp:handle_user_login:315] [info ] user_id=user1&password=3764819 
+Sat May 26 19:04:16 2018 [140225448340288] [sql.hpp:make_query_sql:102] [info ] SELECT * FROM user WHERE user_id = "user1" AND password = "3764819" 
+Sat May 26 19:04:16 2018 [140225448340288] [handler.hpp:operator():330] [info ] user_id 
+Sat May 26 19:04:16 2018 [140225448340288] [handler.hpp:operator():330] [info ] password 
+Sat May 26 19:04:16 2018 [140225448340288] [handler.hpp:operator():330] [info ] nickname 
+Sat May 26 19:04:16 2018 [140225448340288] [handler.hpp:operator():330] [info ] fullname 
+Sat May 26 19:04:16 2018 [140225448340288] [handler.hpp:operator():330] [info ] sex 
+Sat May 26 19:04:16 2018 [140225448340288] [handler.hpp:operator():330] [info ] email 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 2733
+
+ 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/css/font-awesome.min.css HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: text/css,*/*;q=0.1
+Referer: http://127.0.0.1:10000/www/user_login.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/css/font-awesome.min.css 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 27466
+
+ 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/css/bootstrap.min.css HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: text/css,*/*;q=0.1
+Referer: http://127.0.0.1:10000/www/user_login.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/css/bootstrap.min.css 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 127343
+
+ 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/css/demo.css HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: text/css,*/*;q=0.1
+Referer: http://127.0.0.1:10000/www/user_login.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/css/demo.css 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 4922
+
+ 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/css/templatemo-style.css HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: text/css,*/*;q=0.1
+Referer: http://127.0.0.1:10000/www/user_login.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/css/templatemo-style.css 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 4652
+
+ 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/js/modernizr.custom.86080.js HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: */*
+Referer: http://127.0.0.1:10000/www/user_login.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/js/modernizr.custom.86080.js 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 6503
+
+ 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/js/particles.js HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: */*
+Referer: http://127.0.0.1:10000/www/user_login.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/js/particles.js 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 43009
+
+ 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/js/app.js HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: */*
+Referer: http://127.0.0.1:10000/www/user_login.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/js/app.js 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 2954
+
+ 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/fonts/fontawesome-webfont.woff2?v=4.5.0 HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+Origin: http://127.0.0.1:10000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: */*
+Referer: http://127.0.0.1:10000/www/css/font-awesome.min.css
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/fonts/fontawesome-webfont.woff2 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 66624
+
+ 
+Sat May 26 19:04:16 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/query_all_users.jsp? HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Referer: http://127.0.0.1:10000/www/user_login.html
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:17 2018 [140225448340288] [sql.hpp:make_query_sql:102] [info ] SELECT * FROM user 
+Sat May 26 19:04:17 2018 [140225448340288] [handler.hpp:handle_query_all_users:219] [info ] 6 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 3795
+
+ 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/css/bootstrap.min.css HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: text/css,*/*;q=0.1
+Referer: http://127.0.0.1:10000/www/query_all_users.jsp?
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/css/bootstrap.min.css 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 127343
+
+ 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/js/jquery.min.js HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: */*
+Referer: http://127.0.0.1:10000/www/query_all_users.jsp?
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/js/jquery.min.js 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 84280
+
+ 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/js/bootstrap.min.js HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: */*
+Referer: http://127.0.0.1:10000/www/query_all_users.jsp?
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/js/bootstrap.min.js 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 37045
+
+ 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/js/particles.js HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: */*
+Referer: http://127.0.0.1:10000/www/query_all_users.jsp?
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/js/particles.js 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 43009
+
+ 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/net/connection.hpp:handle_read:196] [info ] handle read 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:22] [debug] GET /www/js/app.js HTTP/1.1
+Host: 127.0.0.1:10000
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+Accept: */*
+Referer: http://127.0.0.1:10000/www/query_all_users.jsp?
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+
+ 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_parser.hpp:parse_method:102] [info ] GET 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:26] [trace] 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:51] [info ] handle request 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:48] [debug] www/js/app.js 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_response.hpp:send_file:50] [info ] file exists 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:60] [trace] 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:complete_request:120] [debug] HTTP/1.1 200 OK
+Connection: Keep-Alive
+Content-Length: 2954
+
+ 
+Sat May 26 19:04:17 2018 [140225448340288] [/usr/local/include/cortono/http/http_connection.hpp:handle_read:64] [info ] start send file 
