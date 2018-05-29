@@ -173,11 +173,31 @@ namespace mysql
                 return query_execute<Tuple>(std::move(sql));
             }
 
+            /* template <typename T, typename... Args> */
+            /* std::vector<T> call(std::string& func, Args&&... args) { */
+            /*     std::string sql; */
+            /*     utils::string_append(sql, "CALL ", func, "("); */
+            /*     utils::for_each(std::make_tuple(std::forward<Args>(args)...), [&](auto& item, std::size_t idx) { */
+            /*         if(idx != 0) { */
+            /*             utils::string_append(sql, ", "); */
+            /*         } */
+            /*         utils::string_append(sql, item); */
+            /*     }); */
+            /*     utils::string_append(sql, ")"); */
+            /*     log_info(sql); */
+
+            /*     std::unique_ptr<sql::PreparedStatement> pstmt(conn_->prepareStatement(sql)); */
+            /*     std::unique_ptr<sql::ResultSet> res(pstmt->executeQuery()); */
+            /*     std::vector<T> query_results; */
+            /*     while(res->next()) { */
+
+            /*     } */
+            /* } */
             template <typename T>
             std::enable_if_t<reflection::is_reflection<T>::value, bool>
             insert(T&& t, null_field_set&& null_field = null_field_set{}) {
                 std::unique_ptr<sql::Statement> stmt(conn_->createStatement());
-                stmt->executeUpdate(make_insert_sql(std::forward<T>(t), std::move(null_field)));
+                return stmt->executeUpdate(make_insert_sql(std::forward<T>(t), std::move(null_field)));
             }
 
             template <typename T>
@@ -195,10 +215,14 @@ namespace mysql
                 return stmt->execute(sql);
             }
 
-            int execute(const std::string& sql) {
+            template <typename... Args>
+            int execute(const std::string& sql, Args&&... args) {
                 log_info(sql);
-                std::unique_ptr<sql::Statement> stmt(conn_->createStatement());
-                return stmt->execute(sql);
+                std::unique_ptr<sql::PreparedStatement> pstmt(conn_->prepareStatement(sql));
+                utils::for_each(std::make_tuple(std::forward<Args>(args)...), [&](auto& item, std::size_t idx) {
+                    pstmt->setString(idx + 1, item.data());
+                }, std::make_index_sequence<sizeof...(Args)>{});
+                return pstmt->execute();
             }
 
             void begin() {

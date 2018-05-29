@@ -1,5 +1,6 @@
 #include "handler.hpp"
 
+using namespace cortono;
 bool is_file_path(const std::string& filename) {
     if(filename.size() > 5 && filename.substr(filename.size() - 5) == ".html") {
         return true;
@@ -11,9 +12,30 @@ bool is_file_path(const std::string& filename) {
         return false;
     }
 }
+
+bool is_login(const http::Request& req) {
+    std::unordered_map<std::string, std::string> query_kv_pairs;
+    if(req.method == http::HttpMethod::POST) {
+        query_kv_pairs = parse_query_params(req.body);
+    }
+    else {
+        query_kv_pairs = req.query_kv_pairs;
+    }
+    auto ws = req.get_session(query_kv_pairs["user_id"]);
+    auto session = ws.lock();
+    if(session == nullptr || session->get_data<std::string>("user_id") != query_kv_pairs["user_id"]) {
+        if(session == nullptr) {
+            log_info("session is nullptr");
+        }
+        log_info("no login");
+        return false;
+    }
+    else {
+        return true;
+    }
+}
 int main()
 {
-    using namespace cortono;
     /* cortono::util::logger::close_logger(); */
 
     mysql::MySQL mysql("tcp://127.0.0.1", "root", "3764819", "social");
@@ -51,7 +73,7 @@ int main()
     mysql.bind_attribute<mysql::share_log>(not_nulls10);
 
     mysql::primary_key key11{ { "request_id" } };
-    mysql::not_null not_nulls11{ { "request_id", "sender_id", "recver_id", "pending" } };
+    mysql::not_null not_nulls11{ { "request_id", "sender_id", "recver_id"  } };
     mysql.bind_attribute<mysql::friend_request>(key11, not_nulls11);
 
     http::SimpleApp app;
@@ -62,63 +84,43 @@ int main()
             res.send_file("www/" + filename);
             return;
         }
-        else if(filename == "query_all_users") {
-            res = http::Response(handle_query_all_users(mysql));
+        if(filename == "query_all_users") {
+            if(is_login(req)) {
+                auto query_pairs = req.query_kv_pairs;
+                res = http::Response(handle_query_all_users(mysql, query_pairs["user_id"]));
+            }
+            else {
+                res = http::Response(handle_query_all_users(mysql, ""));
+            }
+            return;
+        }
+        if(!is_login(req)) {
+            res = http::Response("no login");
+            return;
         }
         else if(filename == "query_all_friends") {
-            auto query_pairs = req.query_kv_pairs;
-            auto ws = req.get_session(query_pairs["user_id"]);
-            auto session = ws.lock();
-            if(session == nullptr || session->get_data<std::string>("user_id") != query_pairs["user_id"]) {
-                res = http::Response("no login");
-            }
-            else {
-                res = http::Response(handle_query_all_friends(mysql, req.query_kv_pairs));
-            }
-        }
-        else if(filename == "add_friend") {
-            auto query_pairs = req.query_kv_pairs;
-            auto ws = req.get_session(query_pairs["user_id"]);
-            auto session = ws.lock();
-            if(session == nullptr || session->get_data<std::string>("user_id") != query_pairs["user_id"]) {
-                res = http::Response("no login");
-            }
-            else {
-                res = http::Response(handle_request_friend(mysql, req.query_kv_pairs));
-            }
+            res = http::Response(handle_query_all_friends(mysql, req.query_kv_pairs));
         }
         else if(filename == "query_friend_request") {
-            auto query_pairs = req.query_kv_pairs;
-            auto ws = req.get_session(query_pairs["user_id"]);
-            auto session = ws.lock();
-            if(session == nullptr || session->get_data<std::string>("user_id") != query_pairs["user_id"]) {
-                if(session == nullptr) {
-                    log_info("session is nullptr");
-                }
-                log_info("error");
-                res = http::Response("no login");
-            }
-            else {
-                res = http::Response(handle_query_friend_request(mysql, query_pairs));
-            }
+            res = http::Response(handle_query_friend_request(mysql, req.query_kv_pairs));
         }
         else if(filename == "query_chat_message") {
-            auto query_pairs = req.query_kv_pairs;
-            auto ws = req.get_session(query_pairs["user_id"]);
-            auto session = ws.lock();
-            if(session == nullptr || session->get_data<std::string>("user_id") != query_pairs["user_id"]) {
-                if(session == nullptr) {
-                    log_info("session is nullptr");
-                }
-                log_info("error");
-                res = http::Response("no login");
-            }
-            else {
-                res = http::Response(handle_query_chat_message(mysql, query_pairs));
-            }
+            res = http::Response(handle_query_chat_message(mysql, req.query_kv_pairs));
+        }
+        else if(filename == "query_common_friend") {
+            res = http::Response(handle_query_common_friend(mysql, req.query_kv_pairs));
+        }
+        else if(filename == "query_user_information") {
+            res = http::Response(handle_query_user_with_user_id(mysql, req.query_kv_pairs));
+        }
+        else if(filename == "query_all_groups") {
+            res = http::Response(handle_query_all_groups(mysql, req.query_kv_pairs));
+        }
+        else if(filename == "query_friends_in_group") {
+            res = http::Response(handle_query_friends_in_group(mysql, req.query_kv_pairs));
         }
         else {
-            log_error("no handler");
+            res = http::Response("no handler");
         }
     });
 
@@ -135,74 +137,57 @@ int main()
             else {
                 res = http::Response(std::move(content));
             }
+            return;
+        }
+        if(action == "register_user") {
+            res = http::Response(handle_register_user(mysql, req.body));
+            return;
+        }
+        if(!is_login(req)) {
+            res = http::Response("no login");
+            return;
         }
         else if(action == "send_friend_request") {
-            auto query_kv_pairs = parse_query_params(req.body);
-            auto ws = req.get_session(query_kv_pairs["user_id"]);
-            auto session = ws.lock();
-            if(session == nullptr || session->get_data<std::string>("user_id") != query_kv_pairs["user_id"]) {
-                if(session == nullptr) {
-                    log_info("not login");
-                }
-                res = http::Response("not login");
-            }
-            else {
-                res = http::Response(handle_send_friend_request(mysql, query_kv_pairs));
-            }
+            res = http::Response(handle_send_friend_request(mysql, req.query_kv_pairs));
         }
         else if(action == "agree_friend_request") {
-            auto query_kv_pairs = parse_query_params(req.body);
-            auto ws = req.get_session(query_kv_pairs["recver_id"]);
-            auto session = ws.lock();
-            if(session == nullptr || session->get_data<std::string>("user_id") != query_kv_pairs["recver_id"]) {
-                res = http::Response("not login");
-            }
-            else {
-                res = http::Response(handle_agree_friend_request(mysql, query_kv_pairs));
-            }
+            res = http::Response(handle_agree_friend_request(mysql, req.query_kv_pairs));
+        }
+        else if(action == "reject_friend_request") {
+            res = http::Response(handle_reject_friend_request(mysql, req.query_kv_pairs));
         }
         else if(action == "add_group") {
-            auto query_kv_pairs = parse_query_params(req.body);
-            auto ws = req.get_session(query_kv_pairs["user_id"]);
-            auto session = ws.lock();
-            if(session == nullptr || session->get_data<std::string>("user_id") != query_kv_pairs["user_id"]) {
-                res = http::Response("not login");
-            }
-            else {
-                res = http::Response(handle_add_group(mysql, query_kv_pairs));
-            }
+            res = http::Response(handle_add_group(mysql, req.query_kv_pairs));
         }
         else if(action == "modify_user") {
-            auto query_kv_pairs = parse_query_params(req.body);
-            auto ws = req.get_session(query_kv_pairs["user_id"]);
-            auto session = ws.lock();
-            if(session == nullptr || session->get_data<std::string>("user_id") != query_kv_pairs["user_id"]) {
-                res = http::Response("not login");
-            }
-            else {
-                res = http::Response(handle_modify_user(mysql, req.body));
-            }
+            res = http::Response(handle_modify_user(mysql, req.body));
         }
         else if(action == "send_message") {
-            auto query_kv_pairs = parse_query_params(req.body);
-            auto ws = req.get_session(query_kv_pairs["user_id"]);
-            auto session = ws.lock();
-            if(session == nullptr || session->get_data<std::string>("user_id") != query_kv_pairs["user_id"]) {
-                if(session == nullptr) {
-                    log_info("session is nullptr");
-                }
-                log_info("error");
-                res = http::Response("not login");
-            }
-            else {
-                res = http::Response(handle_send_message(mysql, query_kv_pairs));
-            }
+            res = http::Response(handle_send_message(mysql, req.query_kv_pairs));
         }
-        else if(action == "remove_user") {
-            res = http::Response(handle_remove_user_with_user_id(mysql, req.body));
+        else if(action == "delete_friend") {
+            res = http::Response(handle_delete_friend(mysql, req.query_kv_pairs));
         }
-        else if(action == "register_user") {
-            res = http::Response(handle_register_user(mysql, req.body));
+        else if(action == "reply_message") {
+            res = http::Response(handle_reply_message(mysql, req.query_kv_pairs));
+        }
+        else if(action == "read_done_message") {
+            res = http::Response(handle_read_done_message(mysql, req.query_kv_pairs));
+        }
+        else if(action == "modify_user") {
+            res = http::Response(handle_modify_user(mysql, req.query_kv_pairs));
+        }
+        else if(action == "modify_friend_group") {
+            res = http::Response(handle_modify_friend_group(mysql, req.query_kv_pairs));
+        }
+        else if(action == "modify_group_name") {
+            res = http::Response(handle_modify_group_name(mysql, req.query_kv_pairs));
+        }
+        else if(action == "delete_group") {
+            res = http::Response(handle_delete_group(mysql, req.query_kv_pairs));
+        }
+        else {
+            res = http::Response("no handler");
         }
     });
 

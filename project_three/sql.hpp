@@ -45,7 +45,7 @@ namespace mysql
     using primary_key_map = std::unordered_map<std::string_view, std::unordered_set<std::string_view>>;
     using not_null_map = std::unordered_map<std::string_view, std::unordered_set<std::string_view>>;
     using auto_increment_map = std::unordered_map<std::string_view, std::unordered_set<std::string_view>>;
-    using query_field_set = std::unordered_set<std::string_view>;
+    using query_field_set = std::vector<std::string_view>;
     using update_field_set = std::unordered_set<std::string_view>;
 
     template <typename... Ts, typename Tuple>

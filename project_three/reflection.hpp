@@ -14,6 +14,10 @@ namespace reflection
 #define CON_STR_5(element, ...) MAKE_STRING_VIEW(element) SEPERATOR CON_STR_4(__VA_ARGS__)
 #define CON_STR_6(element, ...) MAKE_STRING_VIEW(element) SEPERATOR CON_STR_5(__VA_ARGS__)
 #define CON_STR_7(element, ...) MAKE_STRING_VIEW(element) SEPERATOR CON_STR_6(__VA_ARGS__)
+#define CON_STR_8(element, ...) MAKE_STRING_VIEW(element) SEPERATOR CON_STR_7(__VA_ARGS__)
+#define CON_STR_9(element, ...) MAKE_STRING_VIEW(element) SEPERATOR CON_STR_8(__VA_ARGS__)
+#define CON_STR_10(element, ...) MAKE_STRING_VIEW(element) SEPERATOR CON_STR_9(__VA_ARGS__)
+#define CON_STR_11(element, ...) MAKE_STRING_VIEW(element) SEPERATOR CON_STR_10(__VA_ARGS__)
 
 #define MAKE_ARG_LIST_1(op, arg, ...) op(arg)
 #define MAKE_ARG_LIST_2(op, arg, ...) op(arg) SEPERATOR MAKE_ARG_LIST_1(op, __VA_ARGS__)
@@ -22,6 +26,10 @@ namespace reflection
 #define MAKE_ARG_LIST_5(op, arg, ...) op(arg) SEPERATOR MAKE_ARG_LIST_4(op, __VA_ARGS__)
 #define MAKE_ARG_LIST_6(op, arg, ...) op(arg) SEPERATOR MAKE_ARG_LIST_5(op, __VA_ARGS__)
 #define MAKE_ARG_LIST_7(op, arg, ...) op(arg) SEPERATOR MAKE_ARG_LIST_6(op, __VA_ARGS__)
+#define MAKE_ARG_LIST_8(op, arg, ...) op(arg) SEPERATOR MAKE_ARG_LIST_7(op, __VA_ARGS__)
+#define MAKE_ARG_LIST_9(op, arg, ...) op(arg) SEPERATOR MAKE_ARG_LIST_8(op, __VA_ARGS__)
+#define MAKE_ARG_LIST_10(op, arg, ...) op(arg) SEPERATOR MAKE_ARG_LIST_9(op, __VA_ARGS__)
+#define MAKE_ARG_LIST_11(op, arg, ...) op(arg) SEPERATOR MAKE_ARG_LIST_10(op, __VA_ARGS__)
 
 #define MARCO_CONCAT(A, B) A##_##B
 
