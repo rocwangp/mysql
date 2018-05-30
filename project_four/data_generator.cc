@@ -19,10 +19,10 @@ void gen_block_data(std::size_t base_addr, std::size_t block_num, std::size_t bl
         for(std::size_t j = 0; j < 7; ++j) {
             *(std::int32_t*)(blk + 8 * j) = (rd() % right_bound1) + left_bound1;
             *(std::int32_t*)(blk + 8 * j + 4) = (rd() % right_bound2) + left_bound2;
-            std::cout << *(std::int32_t*)(blk + 8 * j) << " " << *(std::int32_t*)(blk + 8 * j + 4) << std::endl;
+            /* std::cout << *(std::int32_t*)(blk + 8 * j) << " " << *(std::int32_t*)(blk + 8 * j + 4) << std::endl; */
         }
         *(std::size_t*)(blk + 8 * 7) = base_addr + i + 1;
-        std::cout << *(std::size_t*)(blk + 8 * 7) << std::endl;
+        /* std::cout << *(std::size_t*)(blk + 8 * 7) << std::endl; */
         ::writeBlockToDisk(blk, base_addr + i, &buffer, "./block/");
     }
 
@@ -42,7 +42,7 @@ void gen_block_data(std::size_t base_addr, std::size_t block_num, std::size_t bl
 int main()
 {
     ::srand((unsigned int)(::time(nullptr)));
-    gen_block_data(10000, 16, 64, 1, 40, 1, 1000);
-    gen_block_data(20000, 32, 64, 20, 60, 1, 1000);
+    gen_block_data(10000, 5, 64, 1, 500, 1, 1000);
+    /* gen_block_data(20000, 32, 64, 20, 60, 1, 1000); */
     return 0;
 }

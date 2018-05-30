@@ -108,6 +108,7 @@ unsigned char *readBlockFromDiskImpl(unsigned int addr, Buffer *buf, const char*
     if (!fp)
     {
         perror("Reading Block Failed!\n");
+        perror(filename);
         return NULL;
     }
 
