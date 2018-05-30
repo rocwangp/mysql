@@ -161,5 +161,6 @@ namespace sort_algorithm
 
             /* std::cout << "loop once" << std::endl; */
         }
+        ::freeBuffer(&buffer);
     }
 }
