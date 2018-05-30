@@ -1,5 +1,4 @@
-#include "merge_sort.hpp"
-#include "selection_algorithm.hpp"
+#include "database_algorithm.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -9,8 +8,8 @@ int main(int argc, char* argv[])
     /* sort_algorithm::n_merge_sort(20000, 32); */
 
     if(argc != 5) {
-        selection::binary_search(10000, 16, 40, 50000);
-        selection::binary_search(20000, 32, 60, 60000);
+        algorithm::selection::binary_search(10000, 16, 40, 50000);
+        algorithm::selection::binary_search(20000, 32, 60, 60000);
     }
     std::int32_t base_addr = std::atoi(argv[1]);
     std::int32_t block_num = std::atoi(argv[2]);
@@ -18,6 +17,6 @@ int main(int argc, char* argv[])
     std::int32_t write_addr = std::atoi(argv[4]);
     std::cout << base_addr << " " << block_num << " " << target << " " << write_addr << "\n";
     /* selection::binary_search(10000, 16, 40); */
-    selection::binary_search(base_addr, block_num, target, write_addr);
+    algorithm::selection::binary_search(base_addr, block_num, target, write_addr);
     return 0;
 }
