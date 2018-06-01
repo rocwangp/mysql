@@ -53,26 +53,26 @@ int main()
     }
 
     fout.close();
-    fout.open("department.txt", std::ios_base::out);
-    fout << "研发部\t0\t" << ids[0] << "\t2018-01-01\n"
-         << "市场部\t1\t" << ids[1] << "\t2011-01-03\n"
-         << "人力资源部\t2\t" << ids[2] << "\t2017-05-04\n"
-         << "投资并购部\t3\t" << ids[3] << "\t2015-11-20\n"
-         << "美工部\t4\t" << ids[4] << "\t2016-12-12\n";
+    /* fout.open("department.txt", std::ios_base::out); */
+    /* fout << "研发部\t0\t" << ids[0] << "\t2018-01-01\n" */
+    /*      << "市场部\t1\t" << ids[1] << "\t2011-01-03\n" */
+    /*      << "人力资源部\t2\t" << ids[2] << "\t2017-05-04\n" */
+    /*      << "投资并购部\t3\t" << ids[3] << "\t2015-11-20\n" */
+    /*      << "美工部\t4\t" << ids[4] << "\t2016-12-12\n"; */
 
-    fout.close();
-    fout.open("project.txt", std::ios_base::out);
-    fout << "qq研发\tP1\t" << "深圳\t" << "0\n";
-    fout << "市场调研\tP2\t" << "上海\t" << "1\n";
-    fout << "魔术游戏研发\tP3\t" << "成都\t" << "2\n";
-    fout << "并购管理\tP4\t" << "深圳\t" << "3\n";
-    fout << "UI设计\tP5\t" << "北京\t" << "4\n";
-    fout << "天美游戏研究\tP6\t" << "成都\t" << "5\n";
-    fout << "校招管理\tP7\t" << "深圳\t" << "6\n";
-    fout << "美术研究\tP8\t" << "哈尔滨\t" << "7\n";
-    fout << "社招管理\tP9\t" << "南京\t" << "8\n";
-    fout << "微信研发\tP10\t" << "广州\t" << "9\n";
+    /* fout.close(); */
+    /* fout.open("project.txt", std::ios_base::out); */
+    /* fout << "qq研发\tP1\t" << "深圳\t" << "0\n"; */
+    /* fout << "市场调研\tP2\t" << "上海\t" << "1\n"; */
+    /* fout << "魔术游戏研发\tP3\t" << "成都\t" << "2\n"; */
+    /* fout << "并购管理\tP4\t" << "深圳\t" << "3\n"; */
+    /* fout << "UI设计\tP5\t" << "北京\t" << "4\n"; */
+    /* fout << "天美游戏研究\tP6\t" << "成都\t" << "5\n"; */
+    /* fout << "校招管理\tP7\t" << "深圳\t" << "6\n"; */
+    /* fout << "美术研究\tP8\t" << "哈尔滨\t" << "7\n"; */
+    /* fout << "社招管理\tP9\t" << "南京\t" << "8\n"; */
+    /* fout << "微信研发\tP10\t" << "广州\t" << "9\n"; */
 
-    fout.close();
+    /* fout.close(); */
     return 0;
 }

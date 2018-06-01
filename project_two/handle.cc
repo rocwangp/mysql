@@ -108,6 +108,7 @@ int main(int argc, char* argv[])
             }
         }
         else if(id == 6) {
+
             std::stringstream oss;
             oss << "SELECT E1.ENAME, DEPARTMENT.DNAME "
                 << "FROM EMPLOYEE AS E1, DEPARTMENT "
@@ -124,16 +125,22 @@ int main(int argc, char* argv[])
             }
         }
         else if(id == 7) {
-            std::stringstream oss;
-            oss << "SELECT E1.ESSN FROM EMPLOYEE AS E1, WORKS_ON AS W1 "
-                << "WHERE E1.ESSN = W1.ESSN "
-                << "AND W1.PNO = ? "
-                << "AND E1.ESSN IN ("
-                << "SELECT E2.ESSN FROM EMPLOYEE AS E2, WORKS_ON AS W2 "
-                << "WHERE E2.ESSN = W2.ESSN "
-                << "AND W2.PNO = ?";
-
-            std::unique_ptr<sql::PreparedStatement> pstmt(conn->prepareStatement(oss.str()));
+            std::string sql(
+            "\
+                SELECT \
+                    DISTINCT EMPLOYEE.ESSN \
+                FROM  \
+                    EMPLOYEE, \
+                    WORKS_ON, \
+                    (SELECT EMPLOYEE.ESSN FROM EMPLOYEE, WORKS_ON WHERE \
+                     EMPLOYEE.ESSN = WORKS_ON.ESSN AND \
+                     WORKS_ON.PNO = ?) AS A \
+                WHERE \
+                    EMPLOYEE.ESSN = WORKS_ON.ESSN AND \
+                    WORKS_ON.PNO = ? AND \
+                    WORKS_ON.ESSN IN (A.ESSN) \
+            ");
+            std::unique_ptr<sql::PreparedStatement> pstmt(conn->prepareStatement(sql));
             auto pos = params.find_first_of(' ');
             pstmt->setString(1, params.substr(0, pos));
             pstmt->setString(2, params.substr(pos + 1));
