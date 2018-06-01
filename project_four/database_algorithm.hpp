@@ -1,13 +1,14 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
 #include <functional>
 #include <vector>
 #include <queue>
 #include <random>
 #include <cstring>
 
-#include "extmem-c/extmem.c"
+#include "extmem-c/extmem.h"
 
 namespace algorithm
 {
@@ -46,7 +47,6 @@ namespace algorithm
             { }
 
             void read_from_disk(::Buffer* buffer) {
-                /* std::cout << cur << "\n"; */
                 blk = ::readBlockFromDisk(cur, buffer, "./block/");
             }
             bool update(::Buffer* buffer) {
@@ -78,7 +78,11 @@ namespace algorithm
         struct block_compare
         {
             bool operator()(const block& blk1, const block& blk2) {
-                return *(std::int32_t*)(blk1.blk + blk1.read_bytes) > *(std::int32_t*)(blk2.blk + blk2.read_bytes);
+                std::int32_t value11 = *(std::int32_t*)(blk1.blk + blk1.read_bytes);
+                std::int32_t value12 = *(std::int32_t*)(blk1.blk + blk1.read_bytes + 4);
+                std::int32_t value21 = *(std::int32_t*)(blk2.blk + blk2.read_bytes);
+                std::int32_t value22 = *(std::int32_t*)(blk2.blk + blk2.read_bytes + 4);
+                return value11 == value21 ? value12 > value22 : value11 > value21;
             }
         };
 
@@ -95,12 +99,13 @@ namespace algorithm
             for(std::size_t i = 0; i != block_num; ++i) {
                 unsigned char* blk = ::readBlockFromDisk(base_addr + i, &buffer, "./block/");
                 std::int64_t* p = (std::int64_t*)(blk);
-                std::sort(p, p + 8, [](std::int64_t n1, std::int64_t n2) {
+                std::sort(p, p + 7, [](std::int64_t n1, std::int64_t n2) {
                     std::int32_t n11 = *(std::int32_t*)((char*)(&n1));
+                    std::int32_t n12 = *(std::int32_t*)((char*)(&n1) + 4);
                     std::int32_t n21 = *(std::int32_t*)((char*)(&n2));
-                    return n11 < n21;
+                    std::int32_t n22 = *(std::int32_t*)((char*)(&n2) + 4);
+                    return n11 == n21 ? n12 < n22 : n11 < n21;
                 });
-                /* std::cout << "\n"; */
                 ::writeBlockToDisk(blk, base_addr + i, &buffer, "./block/");
             }
 
@@ -112,12 +117,12 @@ namespace algorithm
                 blocks.emplace_back(base_addr + i, base_addr + i, base_addr + i);
             }
 
-            /* std::cout << "start sort all block" << std::endl; */
+            std::cout << "start sort all block" << std::endl;
             while(blocks.size() != 1) {
                 // step2.1: calculate block count could be read,
                 //          max count is 7 because there is one block to store sorted data
                 std::size_t read_block = std::min(readable_block - 1, blocks.size());
-                /* std::cout << "blocks size: " << blocks.size() << " " << "read_block: " << read_block << std::endl; */
+                std::cout << "blocks size: " << blocks.size() << " " << "read_block: " << read_block << std::endl;
 
                 // step2.2: calculate how many counts it cost to sort
                 //          16 block unit need 3 counts: 7, 7, 2
@@ -125,7 +130,7 @@ namespace algorithm
                 if(blocks.size() % read_block) {
                     ++read_cnt;
                 }
-                /* std::cout << "will read " << read_cnt << " times\n"; */
+                std::cout << "will read " << read_cnt << " times\n";
                 for(std::size_t cnt = 0; cnt != read_cnt; ++cnt) {
                     // step2.3: init min_heap to sort block every time
                     //          [0: 7), [7, 14), [14, 16) for above example
@@ -139,7 +144,7 @@ namespace algorithm
                     std::size_t write_cnt = 0;
                     std::size_t write_bytes = 0;
                     unsigned char* write_blk{ nullptr };
-                    /* std::cout << "heap size: " << pq.size() << std::endl; */
+                    std::cout << "heap size: " << pq.size() << std::endl;
                     while(!pq.empty()) {
                         if(write_blk == nullptr) {
                             write_blk = ::getNewBlockInBuffer(&buffer);
@@ -150,9 +155,8 @@ namespace algorithm
                         *(std::int64_t*)(write_blk + write_bytes) = b.read_int64_t();
                         write_bytes += 8;
                         if(write_bytes == 56) {
-                            /* *(std::int32_t*)(write_blk + write_bytes) = blocks[cnt * read_block].start + write_cnt + 1; */
                             // write to a new position to store sorted data
-                            /* std::cout << "write sorted block to " << write_addr + write_cnt << std::endl; */
+                            std::cout << "write sorted block to " << write_addr + write_cnt << "\n";
                             ::writeBlockToDisk(write_blk, write_addr + write_cnt, &buffer, "./block/");
                             write_bytes = 0;
                             ++write_cnt;
@@ -167,7 +171,7 @@ namespace algorithm
                     std::size_t index = 0;
                     for(std::size_t i = 0; i != read_block && cnt * read_block + i < blocks.size(); ++i) {
                         for(std::size_t j = blocks[cnt * read_block + i].start; j <= blocks[cnt * read_block + i].end; ++j) {
-                            /* std::cout << "rewrite the block: " << write_addr + index << " to " << j << std::endl; */
+                            std::cout << "rewrite the block: " << write_addr + index << " to " << j << std::endl;
                             unsigned char* sorted_blk = ::readBlockFromDisk(write_addr + index++, &buffer, "./block/");
                             ::writeBlockToDisk(sorted_blk, j, &buffer, "./block/");
                         }
@@ -184,7 +188,7 @@ namespace algorithm
                 }
                 blocks.swap(new_blocks);
 
-                /* std::cout << "loop once" << std::endl; */
+                std::cout << "loop once" << std::endl;
             }
             ::freeBuffer(&buffer);
         }
@@ -237,6 +241,8 @@ namespace algorithm
                 std::cout << out_addr << std::endl;
                 ::writeBlockToDisk(out_blk, out_addr, &buffer, "./block/");
             }
+
+            ::freeBuffer(&buffer);
         }
 
         namespace detail
@@ -436,6 +442,476 @@ namespace algorithm
             }
 
             // step6: free buffer
+            ::freeBuffer(&buffer);
+        }
+    }
+
+    namespace projection
+    {
+        void shadow() {
+
+
+        }
+    }
+
+    namespace connection
+    {
+        void nest_loop_join(std::size_t addr1, std::size_t addr2) {
+            static constexpr std::size_t buffer_size = 520;
+            static constexpr std::size_t block_size = 64;
+            static constexpr std::size_t block_num1 = 16;
+            static constexpr std::size_t block_num2 = 32;
+
+            ::Buffer buffer;
+            ::initBuffer(buffer_size, 3, &buffer);
+
+            std::size_t write_addr{ 60000 };
+            std::size_t write_bytes{ 0 };
+            std::size_t write_cnt{ 0 };
+            unsigned char* write_blk{ nullptr };
+
+            for(std::size_t i = 0; i != block_num1; ++i) {
+                unsigned char* read_blk1 = ::readBlockFromDisk(addr1 + i, &buffer, "./block/");
+                for(std::size_t j = 0; j != block_num2; ++j) {
+                    if(write_blk == nullptr) {
+                        write_blk = ::getNewBlockInBuffer(&buffer);
+                    }
+                    unsigned char* read_blk2 = ::readBlockFromDisk(addr2 + j, &buffer, "./block");
+                    for(std::size_t p = 0; p != 7; ++p) {
+                        std::int64_t value1 = *(std::int64_t*)(read_blk1 + p * 8);
+                        for(std::size_t q = 0; q != 7; ++q) {
+                            std::int64_t value2 = *(std::int64_t*)(read_blk2 + q * 8);
+                            if(value1 != value2) {
+                                continue;
+                            }
+                            *(std::int64_t*)(write_blk + write_bytes) = value1;
+                            *(std::int64_t*)(write_blk + write_bytes + 8) = value2;
+                            write_bytes += 16;
+                            if(write_bytes == 48) {
+                                ::writeBlockToDisk(write_blk, write_addr + write_cnt++, &buffer, "./block/");
+                                write_bytes = 0;
+                                write_blk = nullptr;
+                            }
+                        }
+                    }
+                    ::freeBlockInBuffer(read_blk2, &buffer);
+                }
+                ::freeBlockInBuffer(read_blk1, &buffer);
+            }
+            ::freeBuffer(&buffer);
+        }
+
+        void sort_merge_join(std::size_t addr1, std::size_t addr2) {
+            static constexpr std::size_t buffer_size = 520;
+            static constexpr std::size_t block_size = 64;
+            static constexpr std::size_t write_addr = 100000;
+
+            sorting::n_merge_sort(addr1, 16);
+            sorting::n_merge_sort(addr2, 32);
+
+            ::Buffer buffer;
+            ::initBuffer(buffer_size, block_size, &buffer);
+
+            std::size_t write_bytes{ 0 }, write_cnt{ 0 };
+            unsigned char* write_blk{ nullptr };
+
+            std::size_t read_bytes1{ 0 }, read_bytes2{ 0 };
+            std::size_t index1{ 0 }, index2{ 0 };
+            unsigned char* read_blk1{ nullptr }, *read_blk2{ nullptr };
+
+            auto update_read_blk = [&buffer](unsigned char*& read_blk, std::size_t& read_bytes, std::size_t& index) {
+                if(read_blk && read_bytes == 56) {
+                    ::freeBlockInBuffer(read_blk, &buffer);
+                    read_blk = nullptr;
+                    read_bytes = 0;
+                    ++index;
+                }
+            };
+            while(index1 != 16 && index2 != 32) {
+                if(read_blk1 == nullptr) {
+                    read_blk1 = ::readBlockFromDisk(addr1 + index1, &buffer, "./block/");
+                }
+                if(read_blk2 == nullptr) {
+                    read_blk2 = ::readBlockFromDisk(addr2 + index2, &buffer, "./block/");
+                }
+                /* std::printf("%d, %d\n", (int)(index1), (int)(index2)); */
+                std::int32_t n1 = *(std::int32_t*)(read_blk1 + read_bytes1);
+                std::int32_t n2 = *(std::int32_t*)(read_blk2 + read_bytes2);
+                if(n1 < n2) {
+                    read_bytes1 += 8;
+                }
+                else if(n1 > n2) {
+                    read_bytes2 += 8;
+                }
+                else {
+                    if(write_blk == nullptr) {
+                        write_blk = ::getNewBlockInBuffer(&buffer);
+                    }
+                    std::printf("%d, %d\n", n1, n2);
+                    *(std::int64_t*)(write_blk + write_bytes) = *(std::int64_t*)(read_blk1 + read_bytes1);
+                    *(std::int64_t*)(write_blk + write_bytes + 8) = *(std::int64_t*)(read_blk2 + read_bytes2);
+                    write_bytes += 16;
+                    if(write_bytes == 48) {
+                        while(write_bytes != 64) {
+                            *(std::int32_t*)(write_blk + write_bytes) = std::numeric_limits<std::int32_t>::max();
+                            write_bytes += 4;
+                        }
+                        ::writeBlockToDisk(write_blk, write_addr + write_cnt++, &buffer, "./block/");
+                        write_blk = nullptr;
+                        write_bytes = 0;
+                    }
+                    read_bytes1 += 8;
+                    read_bytes2 += 8;
+                }
+                update_read_blk(read_blk1, read_bytes1, index1);
+                update_read_blk(read_blk2, read_bytes2, index2);
+            }
+            if(write_blk) {
+                while(write_bytes != 64) {
+                    *(std::int32_t*)(write_blk + write_bytes) = std::numeric_limits<std::int32_t>::max();
+                    write_bytes += 4;
+                }
+                ::writeBlockToDisk(write_blk, write_addr + write_cnt, &buffer, "./block/");
+            }
+            ::freeBuffer(&buffer);
+        }
+
+        void hash_join(std::size_t addr1, std::size_t addr2) {
+            static constexpr std::size_t buffer_size = 520;
+            static constexpr std::size_t block_size = 64;
+            static constexpr std::size_t write_addr = 11000;
+
+            ::Buffer buffer;
+            ::initBuffer(buffer_size, block_size, &buffer);
+
+            std::unordered_multimap<std::int32_t, std::int64_t> umm;
+            for(std::size_t i = 0; i != 16; ++i) {
+                unsigned char* blk = ::readBlockFromDisk(addr1 + i, &buffer, "./block/");
+                for(std::size_t j = 0; j != 7; ++j) {
+                    std::int32_t n1 = *(std::int32_t*)(blk + 8 * j);
+                    std::int64_t n2 = *(std::int64_t*)(blk + 8 * j);
+                    umm.emplace(n1, n2);
+                }
+                ::freeBlockInBuffer(blk, &buffer);
+            }
+
+            unsigned char* write_blk{ nullptr };
+            std::size_t write_bytes{ 0 }, write_cnt{ 0 };
+
+            for(std::size_t i = 0; i != 32; ++i) {
+                unsigned char* read_blk = ::readBlockFromDisk(addr2 + i, &buffer, "./block/");
+                for(std::size_t j = 0; j != 7; ++j) {
+                    std::int32_t n1 = *(std::int32_t*)(read_blk + 8 * j);
+                    std::int64_t n2 = *(std::int64_t*)(read_blk + 8 * j);
+                    auto [begin, end] = umm.equal_range(n1);
+                    for(auto it = begin; it != end; ++i) {
+                        if(write_blk == nullptr) {
+                            write_blk = ::getNewBlockInBuffer(&buffer);
+                        }
+                        *(std::int64_t*)(write_blk + write_bytes) = it->second;
+                        *(std::int64_t*)(write_blk + write_bytes + 8) = n2;
+                        write_bytes += 16;
+                        if(write_bytes == 48) {
+                            ::writeBlockToDisk(write_blk, write_addr + write_cnt++, &buffer, "./block/");
+                            write_blk = nullptr;
+                            write_bytes = 0;
+                        }
+                    }
+                }
+            }
+            if(write_blk) {
+                while(write_bytes != 64) {
+                    *(std::int32_t*)(write_blk + write_bytes) = std::numeric_limits<std::int32_t>::max();
+                    write_bytes += 4;
+                }
+                ::writeBlockToDisk(write_blk, write_addr + write_cnt++, &buffer, "./block/");
+            }
+            ::freeBuffer(&buffer);
+        }
+    }
+
+    namespace collection
+    {
+        void get_convergence(std::size_t addr1, std::size_t addr2) {
+            static constexpr std::size_t buffer_size = 520;
+            static constexpr std::size_t block_size = 64;
+            static constexpr std::size_t write_addr = 70000;
+
+            sorting::n_merge_sort(addr1, 16);
+            sorting::n_merge_sort(addr2, 32);
+
+            ::Buffer buffer;
+            ::initBuffer(buffer_size, block_size, &buffer);
+
+            std::size_t write_bytes = 0;
+            std::size_t write_cnt = 0;
+            std::int64_t prev_value = 0;
+            bool first{ true };
+            unsigned char* write_blk{ nullptr };
+
+            std::size_t index1 = 0, index2 = 0;
+            std::size_t read_bytes1 = 0, read_bytes2 = 0;
+            unsigned char* read_blk1{ nullptr };
+            unsigned char* read_blk2{ nullptr };
+
+            auto update_read_blk = [&buffer](unsigned char*& read_blk, std::size_t& read_bytes, std::size_t& index, std::int64_t& value) {
+                value = *(std::int64_t*)(read_blk + read_bytes);
+                std::printf("read int32_t value: %d\n", *(std::int32_t*)(read_blk + read_bytes));
+                read_bytes += 8;
+                if(read_bytes == 56) {
+                    ::freeBlockInBuffer(read_blk, &buffer);
+                    read_blk = nullptr;
+                    read_bytes = 0;
+                    ++index;
+                }
+            };
+
+            while(index1 != 16 || index2 != 32) {
+                if(index1 != 16 && read_blk1 == nullptr) {
+                    read_blk1 = ::readBlockFromDisk(addr1 + index1, &buffer, "./block/");
+                }
+                if(index2 != 32 && read_blk2 == nullptr) {
+                    read_blk2 = ::readBlockFromDisk(addr2 + index2, &buffer, "./block/");
+                }
+                std::printf("%d, %d\n", (int)index1, (int)index2);
+                std::int64_t value;
+                if(read_blk1 && read_blk2) {
+                    std::int32_t n11 = *(std::int32_t*)(read_blk1 + read_bytes1);
+                    std::int32_t n12 = *(std::int32_t*)(read_blk1 + read_bytes1 + 4);
+                    std::int32_t n21 = *(std::int32_t*)(read_blk2 + read_bytes2);
+                    std::int32_t n22 = *(std::int32_t*)(read_blk2 + read_bytes2 + 4);
+                    if((n11 == n21 && n12 < n22) || (n11 < n21)) {
+                        update_read_blk(read_blk1, read_bytes1, index1, value);
+                    }
+                    else {
+                        update_read_blk(read_blk2, read_bytes2, index2, value);
+                    }
+                }
+                else if(read_blk1) {
+                    update_read_blk(read_blk1, read_bytes1, index1, value);
+                }
+                else {
+                    update_read_blk(read_blk2, read_bytes2, index2, value);
+                }
+
+                if(first || (!first && prev_value != value)) {
+                    first = false;
+                    if(write_blk == nullptr) {
+                        write_blk = ::getNewBlockInBuffer(&buffer);
+                    }
+                    *(std::int64_t*)(write_blk + write_bytes) = value;;
+                    prev_value = value;
+
+                    write_bytes += 8;
+                    if(write_bytes == 56) {
+                        ::writeBlockToDisk(write_blk, write_addr + write_cnt++, &buffer, "./block/");
+                        write_bytes = 0;
+                        write_blk = nullptr;
+                    }
+                }
+
+                std::printf("loop once\n");
+            }
+            if(write_blk) {
+                while(write_bytes != 64) {
+                    *(std::int32_t*)(write_blk + write_bytes) = std::numeric_limits<std::int32_t>::max();
+                    *(std::int32_t*)(write_blk + write_bytes + 4) = std::numeric_limits<std::int32_t>::max();
+                    write_bytes += 8;
+                }
+                ::writeBlockToDisk(write_blk, write_addr + write_cnt, &buffer, "./block/");
+            }
+
+            ::freeBuffer(&buffer);
+        }
+
+        void get_intersection(std::size_t addr1, std::size_t addr2) {
+            static constexpr std::size_t buffer_size = 520;
+            static constexpr std::size_t block_size = 64;
+            static constexpr std::size_t write_addr = 80000;
+
+            sorting::n_merge_sort(addr1, 16);
+            sorting::n_merge_sort(addr2, 32);
+
+            ::Buffer buffer;
+            ::initBuffer(buffer_size, block_size, &buffer);
+
+            std::size_t write_bytes{ 0 };
+            std::size_t write_cnt{ 0 };
+            std::int64_t prev_value{ 0 };
+            bool first{ true };
+            unsigned char* write_blk{ nullptr };
+
+            unsigned char* read_blk1{ nullptr };
+            unsigned char* read_blk2{ nullptr };
+            std::size_t index1{ 0 }, index2{ 0 };
+            std::size_t read_bytes1{ 0 }, read_bytes2{ 0 };
+
+            auto update_read_blk = [&buffer](unsigned char*& read_blk, std::size_t& read_bytes, std::size_t& index) {
+                if(read_blk) {
+                    if(read_bytes == 56) {
+                        ::freeBlockInBuffer(read_blk, &buffer);
+                        read_blk = nullptr;
+                        read_bytes = 0;
+                        ++index;
+                    }
+                }
+            };
+            while(index1 != 16 || index2 != 32) {
+                if(index1 != 16 && read_blk1 == nullptr) {
+                    read_blk1 = ::readBlockFromDisk(addr1 + index1, &buffer, "./block/");
+                }
+                if(index2 != 32 && read_blk2 == nullptr) {
+                    read_blk2 = ::readBlockFromDisk(addr2 + index2, &buffer, "./block/");
+                }
+                std::printf("%d, %d\n", (int)index1, (int)index2);
+                std::int64_t value;
+                bool done{ false };
+                if(read_blk1 && read_blk2) {
+                    std::int32_t n11 = *(std::int32_t*)(read_blk1 + read_bytes1);
+                    std::int32_t n12 = *(std::int32_t*)(read_blk1 + read_bytes1 + 4);
+                    std::int32_t n21 = *(std::int32_t*)(read_blk2 + read_bytes2);
+                    std::int32_t n22 = *(std::int32_t*)(read_blk2 + read_bytes2 + 4);
+                    if((n11 > n21) || (n11 == n21 && n12 > n22)) {
+                        read_bytes2 += 8;
+                    }
+                    else if((n11 < n21) || (n11 == n21 && n12 < n22)) {
+                        read_bytes1 += 8;
+                    }
+                    else {
+                        done = true;
+                        value = *(std::int64_t*)(read_blk1 + read_bytes1);
+                        read_bytes1 += 8;
+                        read_bytes2 += 8;
+                    }
+                }
+                else {
+                    done = true;
+                    if(read_blk1) {
+                        value = *(std::int64_t*)(read_blk1 + read_bytes1);
+                        read_bytes1 += 8;
+                    }
+                    else {
+                        value = *(std::int64_t*)(read_blk2 + read_bytes2);
+                        read_bytes2 += 8;
+                    }
+                }
+                if(done && (first || (!first && prev_value != value))) {
+                    first = false;
+                    if(write_blk == nullptr) {
+                        write_blk = ::getNewBlockInBuffer(&buffer);
+                    }
+                    *(std::int64_t*)(write_blk + write_bytes) = value;
+                    prev_value = value;
+                    write_bytes += 8;
+                    if(write_bytes == 56) {
+                        ::writeBlockToDisk(write_blk, write_addr + write_cnt++, &buffer, "./block/");
+                        write_bytes = 0;
+                        write_blk = nullptr;
+                    }
+                }
+                update_read_blk(read_blk1, read_bytes1, index1);
+                update_read_blk(read_blk2, read_bytes2, index2);
+            }
+
+            if(write_blk) {
+                while(write_bytes != 64) {
+                    *(std::int32_t*)(write_blk + write_bytes) = std::numeric_limits<std::int32_t>::max();
+                    *(std::int32_t*)(write_blk + write_bytes + 4) = std::numeric_limits<std::int32_t>::max();
+                    write_bytes += 8;
+                }
+                ::writeBlockToDisk(write_blk, write_addr + write_cnt, &buffer, "./block/");
+            }
+            ::freeBuffer(&buffer);
+        }
+
+        void get_complement(std::size_t addr1, std::size_t addr2) {
+            static constexpr std::size_t buffer_size = 520;
+            static constexpr std::size_t block_size = 64;
+            static constexpr std::size_t write_addr = 90000;
+
+            sorting::n_merge_sort(addr1, 16);
+            sorting::n_merge_sort(addr2, 32);
+
+            ::Buffer buffer;
+            ::initBuffer(buffer_size, block_size, &buffer);
+
+            std::size_t write_bytes{ 0 }, write_cnt{ 0 };
+            unsigned char* write_blk { nullptr };
+
+            std::size_t read_bytes1{ 0 }, read_bytes2{ 0 };
+            std::size_t index1{ 0 }, index2{ 0 };
+            unsigned char* read_blk1{ nullptr }, *read_blk2{ nullptr };
+
+            bool first{ true };
+            std::int64_t prev_value{ 0 };
+
+            auto update_read_blk = [&buffer](unsigned char*& read_blk, std::size_t& read_bytes, std::size_t& index) {
+                if(read_bytes == 56 && read_blk) {
+                    ::freeBlockInBuffer(read_blk, &buffer);
+                    read_blk = nullptr;
+                    read_bytes = 0;
+                    ++index;
+                }
+            };
+            while(index2 != 32) {
+                if(index1 != 16 && read_blk1 == nullptr) {
+                    read_blk1 = ::readBlockFromDisk(addr1 + index1, &buffer, "./block/");
+                }
+                if(read_blk2 == nullptr) {
+                    read_blk2 = ::readBlockFromDisk(addr2 + index2, &buffer, "./block/");
+                }
+                std::printf("%d, %d\n", (int)(index1), (int)(index2));
+                bool done{ false };
+                std::int64_t value;
+                if(read_blk1) {
+                    std::int32_t n11 = *(std::int32_t*)(read_blk1 + read_bytes1);
+                    std::int32_t n12 = *(std::int32_t*)(read_blk1 + read_bytes1 + 4);
+                    std::int32_t n21 = *(std::int32_t*)(read_blk2 + read_bytes2);
+                    std::int32_t n22 = *(std::int32_t*)(read_blk2 + read_bytes2 + 4);
+                    if((n11 < n21) || (n11 == n21 && n12 < n22)) {
+                        read_bytes1 += 8;
+                    }
+                    else if((n11 > n21) || (n11 == n21 && n12 > n22)) {
+                        value = *(std::int64_t*)(read_blk2 + read_bytes2);
+                        read_bytes2 += 8;
+                        done = true;
+                    }
+                    else {
+                        read_bytes1 += 8;
+                        read_bytes2 += 8;
+                    }
+                }
+                else {
+                    value = *(std::int64_t*)(read_blk2 + read_bytes2);
+                    read_bytes2 += 8;
+                    done = true;
+                }
+                if(done && (first || (!first && prev_value != value))) {
+                    first = false;
+                    if(write_blk == nullptr) {
+                        write_blk = ::getNewBlockInBuffer(&buffer);
+                    }
+                    *(std::int64_t*)(write_blk + write_bytes) = value;
+                    prev_value = value;
+                    write_bytes += 8;
+                    if(write_bytes == 56) {
+                        ::writeBlockToDisk(write_blk, write_addr + write_cnt++, &buffer, "./block/");
+                        write_bytes = 0;
+                        write_blk = nullptr;
+                    }
+                }
+                update_read_blk(read_blk1, read_bytes1, index1);
+                update_read_blk(read_blk2, read_bytes2, index2);
+            }
+
+            if(write_blk) {
+                while(write_bytes != 64) {
+                    *(std::int32_t*)(write_blk + write_bytes) = std::numeric_limits<std::int32_t>::max();
+                    *(std::int32_t*)(write_blk + write_bytes + 4) = std::numeric_limits<std::int32_t>::max();
+                    write_bytes += 8;
+                }
+                ::writeBlockToDisk(write_blk, write_addr + write_cnt, &buffer, "./block/");
+            }
             ::freeBuffer(&buffer);
         }
     }
