@@ -461,11 +461,11 @@ namespace algorithm
             static constexpr std::size_t block_size = 64;
             static constexpr std::size_t block_num1 = 16;
             static constexpr std::size_t block_num2 = 32;
+            static constexpr std::size_t write_addr = 120000;
 
             ::Buffer buffer;
-            ::initBuffer(buffer_size, 3, &buffer);
+            ::initBuffer(buffer_size, block_size, &buffer);
 
-            std::size_t write_addr{ 60000 };
             std::size_t write_bytes{ 0 };
             std::size_t write_cnt{ 0 };
             unsigned char* write_blk{ nullptr };
@@ -473,21 +473,27 @@ namespace algorithm
             for(std::size_t i = 0; i != block_num1; ++i) {
                 unsigned char* read_blk1 = ::readBlockFromDisk(addr1 + i, &buffer, "./block/");
                 for(std::size_t j = 0; j != block_num2; ++j) {
-                    if(write_blk == nullptr) {
-                        write_blk = ::getNewBlockInBuffer(&buffer);
-                    }
-                    unsigned char* read_blk2 = ::readBlockFromDisk(addr2 + j, &buffer, "./block");
+                    unsigned char* read_blk2 = ::readBlockFromDisk(addr2 + j, &buffer, "./block/");
                     for(std::size_t p = 0; p != 7; ++p) {
                         std::int64_t value1 = *(std::int64_t*)(read_blk1 + p * 8);
                         for(std::size_t q = 0; q != 7; ++q) {
                             std::int64_t value2 = *(std::int64_t*)(read_blk2 + q * 8);
-                            if(value1 != value2) {
+                            if(*(std::int32_t*)(read_blk1 + p * 8) != *(std::int32_t*)(read_blk2 + q * 8)) {
                                 continue;
+                            }
+                            std::printf("%d, %d\t", *(std::int32_t*)(read_blk1 + p * 8), *(std::int32_t*)(read_blk1 + p * 8 + 4));
+                            std::printf("%d, %d\n", *(std::int32_t*)(read_blk2 + q * 8), *(std::int32_t*)(read_blk2 + q * 8 + 4));
+                            if(write_blk == nullptr) {
+                                write_blk = ::getNewBlockInBuffer(&buffer);
                             }
                             *(std::int64_t*)(write_blk + write_bytes) = value1;
                             *(std::int64_t*)(write_blk + write_bytes + 8) = value2;
                             write_bytes += 16;
                             if(write_bytes == 48) {
+                                while(write_bytes != 64) {
+                                    *(std::int32_t*)(write_blk + write_bytes) = std::numeric_limits<std::int32_t>::max();
+                                    write_bytes += 4;
+                                }
                                 ::writeBlockToDisk(write_blk, write_addr + write_cnt++, &buffer, "./block/");
                                 write_bytes = 0;
                                 write_blk = nullptr;
@@ -498,17 +504,26 @@ namespace algorithm
                 }
                 ::freeBlockInBuffer(read_blk1, &buffer);
             }
+            if(write_blk) {
+                while(write_bytes != 64) {
+                    *(std::int32_t*)(write_blk + write_bytes) = std::numeric_limits<std::int32_t>::max();
+                    write_bytes += 4;
+                }
+                ::writeBlockToDisk(write_blk, write_addr + write_cnt++, &buffer, "./block/");
+            }
             ::freeBuffer(&buffer);
         }
 
         void sort_merge_join(std::size_t addr1, std::size_t addr2) {
             static constexpr std::size_t buffer_size = 520;
             static constexpr std::size_t block_size = 64;
-            static constexpr std::size_t write_addr = 100000;
+            static constexpr std::size_t write_addr = 110000;
 
-            sorting::n_merge_sort(addr1, 16);
-            sorting::n_merge_sort(addr2, 32);
+            // step0: sort data block
+            /* sorting::n_merge_sort(addr1, 16); */
+            /* sorting::n_merge_sort(addr2, 32); */
 
+            // step1: init buffer
             ::Buffer buffer;
             ::initBuffer(buffer_size, block_size, &buffer);
 
@@ -519,6 +534,7 @@ namespace algorithm
             std::size_t index1{ 0 }, index2{ 0 };
             unsigned char* read_blk1{ nullptr }, *read_blk2{ nullptr };
 
+            // check read_blk and try to free it
             auto update_read_blk = [&buffer](unsigned char*& read_blk, std::size_t& read_bytes, std::size_t& index) {
                 if(read_blk && read_bytes == 56) {
                     ::freeBlockInBuffer(read_blk, &buffer);
@@ -527,6 +543,34 @@ namespace algorithm
                     ++index;
                 }
             };
+
+            // write 128 bytes to write_blk and flush to disk if needed
+            auto update_write_blk = [&](std::int64_t n1, std::int64_t n2) {
+                if(write_blk == nullptr) {
+                    write_blk = ::getNewBlockInBuffer(&buffer);
+                }
+                char* p1 = (char*)&n1;
+                char* p2 = (char*)(&n2);
+                std::printf("%d, %d\t%d, %d\n", *(std::int32_t*)(p1), *(std::int32_t*)(p1 + 4),
+                                                *(std::int32_t*)(p2), *(std::int32_t*)(p2 + 4));
+                *(std::int64_t*)(write_blk + write_bytes) = n1;
+                *(std::int64_t*)(write_blk + write_bytes + 8) = n2;
+                write_bytes += 16;
+                if(write_bytes == 48) {
+                    // idle memory, memset it
+                    while(write_bytes != 64) {
+                        *(std::int32_t*)(write_blk + write_bytes) = std::numeric_limits<std::int32_t>::max();
+                        write_bytes += 4;
+                    }
+                    ::writeBlockToDisk(write_blk, write_addr + write_cnt++, &buffer, "./block/");
+                    write_blk = nullptr;
+                    write_bytes = 0;
+                }
+            };
+
+            std::size_t dup_cnt{ 0 };
+            std::int32_t prev_value{ 0 };
+            bool handle_dup_data{ false };
             while(index1 != 16 && index2 != 32) {
                 if(read_blk1 == nullptr) {
                     read_blk1 = ::readBlockFromDisk(addr1 + index1, &buffer, "./block/");
@@ -534,33 +578,110 @@ namespace algorithm
                 if(read_blk2 == nullptr) {
                     read_blk2 = ::readBlockFromDisk(addr2 + index2, &buffer, "./block/");
                 }
-                /* std::printf("%d, %d\n", (int)(index1), (int)(index2)); */
+
+                // step2: compare first column in two relationships
                 std::int32_t n1 = *(std::int32_t*)(read_blk1 + read_bytes1);
                 std::int32_t n2 = *(std::int32_t*)(read_blk2 + read_bytes2);
                 if(n1 < n2) {
+                    // handle_dup_data: represent whether need to copy prev data once
+                    // dup_cnt: the number of data needed to copy
+                    // prev_value: previous value
+
+                    // step2.11: copy previous data
+                    if(handle_dup_data && dup_cnt > 0 && n1 == prev_value) {
+                        // step2.12: calculate the range needed to copy
+                        std::size_t prev_block_cnt = (dup_cnt - write_bytes / 16) / 3;
+                        std::size_t prev_value_cnt = 3;
+                        if((dup_cnt - write_bytes / 16) % 3) {
+                            ++prev_block_cnt;
+                            prev_value_cnt = (dup_cnt - write_bytes / 16) % 3;
+                        }
+                        std::size_t start_addr{ write_addr + write_cnt - prev_block_cnt };
+                        std::size_t end_addr{ write_addr + write_cnt };
+                        std::size_t start_bytes{ (3 - prev_value_cnt) * 16 };
+                        std::size_t end_bytes{ write_bytes };
+
+                        std::printf("start position: %d block %d bytes\n", (int)start_addr, (int)start_bytes);
+                        std::printf("end position: %d block %d bytes\n", (int)end_addr, (int)end_bytes);
+                        std::printf("cur write_blk point to %d addr %d bytes\n", (int)(write_addr + write_cnt), (int)(write_bytes));
+
+                        // step2.13: copy [start_addr, end_addr) because these data has writen on disk already
+                        //           data in end_addr haven't beed writen to disk now, so can't read it from disk!!!!!!!
+                        while(start_addr != end_addr) {
+                            unsigned char* dup_blk = ::readBlockFromDisk(start_addr, &buffer, "./block/");
+                            while(start_bytes != 48) {
+                                *(std::int32_t*)(dup_blk + start_bytes + 4) = *(std::int32_t*)(read_blk1 + read_bytes1 + 4);
+                                update_write_blk(*(std::int64_t*)(dup_blk + start_bytes), *(std::int64_t*)(dup_blk + start_bytes + 8));
+                                start_bytes += 16;
+                            }
+                            start_bytes = 0;
+                            ::freeBlockInBuffer(dup_blk, &buffer);
+                            ++start_addr;
+                        }
+                        // step2.14: copy the data in end_addr to new block and write back to write_blk
+                        //           could't read data from write_blk directly and write back!!!!!
+                        //           because update_write_blk maybe change write_blk and update current block point!!!!
+                        //           which will cause reading dup data error
+                        //           need to copy to a temporary block and then write back to write_blk
+                        if(start_addr == end_addr) {
+                            std::printf("handle the duplicate data in write_blk\n");
+                            unsigned char* blk = ::getNewBlockInBuffer(&buffer);
+                            unsigned char* dup_blk = write_blk;
+                            // write_blk has been modified due to write data, read dup data from disk instead of reading from write_blk
+                            if(start_addr != write_addr + write_cnt) {
+                                dup_blk = ::readBlockFromDisk(start_addr, &buffer, "./block/");
+                            }
+                            // step2.15: copy these data to a temporary block
+                            for(auto bytes = start_bytes; bytes != end_bytes; bytes += 16) {
+                                *(std::int64_t*)(blk + bytes - start_bytes) = *(std::int64_t*)(dup_blk + bytes);
+                                *(std::int64_t*)(blk + bytes - start_bytes + 8) = *(std::int64_t*)(dup_blk + bytes + 8);
+                            }
+                            if(start_addr != write_addr + write_cnt) {
+                                ::freeBlockInBuffer(dup_blk, &buffer);
+                            }
+                            // step2.16: write back to write_blk
+                            for(std::size_t bytes = 0; bytes != end_bytes - start_bytes; bytes += 16) {
+                                *(std::int32_t*)(blk + bytes + 4) = *(std::int32_t*)(read_blk1 + read_bytes1 + 4);
+                                update_write_blk(*(std::int64_t*)(blk + bytes), *(std::int64_t*)(blk + bytes + 8));
+                            }
+                            ::freeBlockInBuffer(blk, &buffer);
+                        }
+                    }
+                    // not equal, needn't copy dup data
+                    else if(handle_dup_data && dup_cnt > 0 && n1 != prev_value) {
+                        handle_dup_data = false;
+                        dup_cnt = 0;
+                    }
+                    // record prev_value when n1 < n2 first
+                    // R: 20 20
+                    // S: 20 20 20 20 21
+                    // when compare the first 20 of R and 20 of S, write (20, 20), (20, 20), (20, 20), (20, 20) to write_blk
+                    // when compare the first 20 of R and 21 of S, assign 20 to prev_value and set handle_dup_data
+                    // when handle the second of 20 of R, find it equals to prev_value(20) and handle_dup_data has been set
+                    // so need copy (20, 20), (20, 20), (20, 20), (20, 20) to write_blk
+                    // dup_cnt is used to record the number of data need to copy(4 in this example)
+                    else {
+                        prev_value = *(std::int32_t*)(read_blk1 + read_bytes1);
+                        handle_dup_data = true;
+                    }
                     read_bytes1 += 8;
                 }
                 else if(n1 > n2) {
+                    // step2.2: clear record
+                    dup_cnt = 0;
+                    handle_dup_data = false;
                     read_bytes2 += 8;
                 }
                 else {
-                    if(write_blk == nullptr) {
-                        write_blk = ::getNewBlockInBuffer(&buffer);
+                    // step2.3: init record when n1 == n2 first
+                    if(handle_dup_data) {
+                        handle_dup_data = false;
+                        dup_cnt = 0;
                     }
-                    std::printf("%d, %d\n", n1, n2);
-                    *(std::int64_t*)(write_blk + write_bytes) = *(std::int64_t*)(read_blk1 + read_bytes1);
-                    *(std::int64_t*)(write_blk + write_bytes + 8) = *(std::int64_t*)(read_blk2 + read_bytes2);
-                    write_bytes += 16;
-                    if(write_bytes == 48) {
-                        while(write_bytes != 64) {
-                            *(std::int32_t*)(write_blk + write_bytes) = std::numeric_limits<std::int32_t>::max();
-                            write_bytes += 4;
-                        }
-                        ::writeBlockToDisk(write_blk, write_addr + write_cnt++, &buffer, "./block/");
-                        write_blk = nullptr;
-                        write_bytes = 0;
-                    }
-                    read_bytes1 += 8;
+                    update_write_blk(*(std::int64_t*)(read_blk1 + read_bytes1), *(std::int64_t*)(read_blk2 + read_bytes2));
+
+                    /* read_bytes1 += 8; */
+                    ++dup_cnt;
                     read_bytes2 += 8;
                 }
                 update_read_blk(read_blk1, read_bytes1, index1);

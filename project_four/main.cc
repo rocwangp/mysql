@@ -61,13 +61,14 @@ int main(int argc, char* argv[])
     /*     } */
     /* } */
 
-    algorithm::gen_block_data(10000, 16, 64, 1, 41, 1, 10);
+    algorithm::gen_block_data(10000, 16, 64, 1, 40, 1, 10);
     algorithm::gen_block_data(20000, 32, 64, 20, 61, 1, 10);
-    /* algorithm::sorting::n_merge_sort(10000, 16); */
-    /* algorithm::sorting::n_merge_sort(20000, 32); */
+    algorithm::sorting::n_merge_sort(10000, 16);
+    algorithm::sorting::n_merge_sort(20000, 32);
     /* algorithm::collection::get_convergence(10000, 20000); */
     /* algorithm::collection::get_intersection(10000, 20000); */
     /* algorithm::collection::get_complement(10000, 20000); */
+    algorithm::connection::nest_loop_join(10000, 20000);
     algorithm::connection::sort_merge_join(10000, 20000);
 
     /* switch(op) { */

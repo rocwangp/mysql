@@ -62,13 +62,25 @@ def print_file(addr, count):
     for i in range(0, count):
         filepath = "./block/" + str(addr + i) + ".blk"
         print(filepath)
-        os.system("od -A d -c -t d4 -w56 " + filepath)
+        os.system("od -A d -c -t d4 -w8 " + filepath)
     print("done")
 
+def check_join_res(addr1, addr2, count):
+    for i in range(0, count):
+        fin1 = open("./block/" + str(addr1) + ".blk", 'r')
+        fin2 = open("./block/" + str(addr2) + ".blk", 'r')
+        if fin1.read() != fin2.read():
+            print("error..........")
+        fin1.close()
+        fin2.close()
+    print("ok")
+
 if __name__ == '__main__':
-    addr = int(sys.argv[1])
-    num = int(sys.argv[2])
+    # addr = int(sys.argv[1])
+    # num = int(sys.argv[2])
     # print_file(int(sys.argv[1]), int(sys.argv[2]))
-    print_sort_res(addr, num)
-    check_sort_res(int(sys.argv[1]), int(sys.argv[2]));
+    # print_sort_res(addr, num)
+    # check_sort_res(int(sys.argv[1]), int(sys.argv[2]));
     # print_res(20000, 32)
+    check_join_res(110000, 120000, int(sys.argv[1]))
+    # print_file(int(sys.argv[1]), int(sys.argv[2]))
