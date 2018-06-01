@@ -30,6 +30,7 @@ def check_sort_res(addr, count):
 def print_sort_res(addr, count):
     for i in range(0, count):
         filepath = "./block/" + str(addr + i) + ".blk"
+        print(filepath)
         res = os.popen("od -A d -c -t d4 -w56 " + filepath)
         line = res.readlines()
         for j in range(0, len(line)):
@@ -76,11 +77,11 @@ def check_join_res(addr1, addr2, count):
     print("ok")
 
 if __name__ == '__main__':
-    # addr = int(sys.argv[1])
-    # num = int(sys.argv[2])
+    addr = int(sys.argv[1])
+    num = int(sys.argv[2])
     # print_file(int(sys.argv[1]), int(sys.argv[2]))
-    # print_sort_res(addr, num)
+    print_sort_res(addr, num)
     # check_sort_res(int(sys.argv[1]), int(sys.argv[2]));
     # print_res(20000, 32)
-    check_join_res(110000, 120000, int(sys.argv[1]))
+    # check_join_res(110000, 120000, int(sys.argv[1]))
     # print_file(int(sys.argv[1]), int(sys.argv[2]))
